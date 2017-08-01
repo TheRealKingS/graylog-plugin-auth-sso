@@ -39,6 +39,8 @@ public abstract class SsoAuthConfig {
                 .usernameHeader("Remote-User")
                 .autoCreateUser(true)
                 .requireTrustedProxies(true)
+		.rolesHeader("Roles")
+		.syncRoles(false)
                 .trustedProxies(trustedProxies)
                 .build();
     }
@@ -72,6 +74,13 @@ public abstract class SsoAuthConfig {
     @Nullable
     public abstract String defaultEmailDomain();
 
+    @JsonProperty("sync_roles")
+    public abstract boolean syncRoles();
+
+    @JsonProperty("roles_header")
+    @Nullable
+    public abstract String rolesHeader();
+
     @AutoValue.Builder
     public static abstract class Builder {
         abstract SsoAuthConfig build();
@@ -99,6 +108,12 @@ public abstract class SsoAuthConfig {
 
         @JsonProperty("default_email_domain")
         public abstract Builder defaultEmailDomain(@Nullable String defaultEmailDomain);
+
+	@JsonProperty("sync_roles")
+        public abstract Builder syncRoles(boolean syncRoles);
+      
+        @JsonProperty("roles_header")
+        public abstract Builder rolesHeader(@Nullable String rolesHeader);
 
     }
 }
